@@ -1,7 +1,6 @@
 <template>
     <div class="task-input__list my-list">
         <input class="task-input__item" v-model="title" placeholder="Тема" type="text"/>
-        <label class="msg_error">Опишите задачу!</label>
         <input class="task-input__item" v-model="description" placeholder="Описание" type="text"/>
         <button @click="onAddTask">Добавить</button>
     </div>
@@ -11,7 +10,7 @@
 import { ref } from 'vue'
 
 export default {
-  emits: ['onAddTask'],
+  emits: ['onAddTask', 'onValidate'],
   setup (props, { emit }) {
     const title = ref('')
     const description = ref('')

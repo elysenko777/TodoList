@@ -14,18 +14,9 @@
 <script lang="ts">
 import taskInput from '../components/taskInput.vue'
 import taskCard from '../components/taskCard.vue'
+import TaskData from '../models/taskData'
+import Task from '../models/task'
 import { ref } from 'vue'
-
-interface TaskData {
-  title: string;
-  description: string;
-}
-
-interface Task {
-  id: number;
-  data: TaskData;
-  status: boolean;
-}
 
 export default {
   name: 'App',
