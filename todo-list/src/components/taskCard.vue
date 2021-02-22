@@ -130,12 +130,12 @@ export default {
     transform: rotate(45deg);
   }
 
-  input:checked + .task-card__check {
+  .task-card[data-done-task="true"] input + .task-card__check {
     background: #61e1c0;
     position: relative;
   }
 
-  input:checked + .task-card__check::after{
+  .task-card[data-done-task="true"] input + .task-card__check::after{
     content: '';
     display: block;
     position: absolute;

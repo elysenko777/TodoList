@@ -15,8 +15,8 @@
 import taskInput from '../components/taskInput.vue'
 import taskCard from '../components/taskCard.vue'
 import TaskData from '../models/taskData'
-import Task from '../models/task'
 import { ref } from 'vue'
+import store from '../store'
 
 export default {
   name: 'App',
@@ -26,11 +26,6 @@ export default {
   },
   setup () {
     const taskList = ref()
-    let hasList = false
-    let isEmpty = true
-    const vaidateTask = ({ title, description }: TaskData) => {
-      isEmpty = (title === '' && description === '') || false
-    }
     const taskData = ({ title, description }: TaskData) => {
       let taskInfo = {
         title,
@@ -45,36 +40,23 @@ export default {
       return taskInfo
     }
     const addTask = ({ title, description }: TaskData) => {
-      vaidateTask({ title, description })
+      const isEmpty = (title === '' && description === '') || false
       if (!isEmpty) {
         const taskInfo = taskData({ title, description })
-        if (!hasList) {
-          taskList.value = [{ id: 0, data: taskInfo, status: false }]
-          hasList = true
-        } else {
-          taskList.value = [...taskList.value, { id: taskList.value.length + 1, data: taskInfo, status: false }]
-        }
+        store.commit('setTask', taskInfo)
+        taskList.value = store.state.taskList
       }
     }
     const setDoneTask = (id: number) => {
-      taskList.value = taskList.value.map((item: Task) => {
-        if (item.id === id) {
-          if (item.status) {
-            item.status = false
-          } else {
-            item.status = true
-          }
-        }
-        return item
-      })
+      store.commit('doneTask', id)
+      taskList.value = store.state.taskList
     }
     const removeTask = (id: number) => {
-      taskList.value = taskList.value.filter((item: Task) => item.id !== id)
+      store.commit('removeTask', id)
+      taskList.value = store.state.taskList
     }
     return {
       taskList,
-      isEmpty,
-      vaidateTask,
       addTask,
       removeTask,
       setDoneTask
