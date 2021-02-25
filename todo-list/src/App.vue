@@ -1,15 +1,17 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <div id="nav">
+      <router-link to="/">Task book</router-link> |
+      <router-link to="/about">About </router-link>
+    </div>
+    <router-view/>
   </div>
-  <router-view/>
 </template>
 
-<style>
+<style lang="scss">
 #nav {
     text-align: center;
     margin: 10px auto;
 }
-  @import './style.scss';
+  @import './styles/main.scss';
 </style>

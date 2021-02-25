@@ -1,31 +1,29 @@
 <template>
   <div class="home">
     <div class="task-page">
-      <taskInput @onAddTask="addTask" @emptyTask="isEmpty"></taskInput>
-      <ul class="task-list my-list">
-        <li v-for="item in taskList" :key="item.id">
-          <taskCard @onDone="setDoneTask(item.id)" @onRemove="removeTask(item.id)"  :model="item"></taskCard>
-        </li>
-      </ul>
+      <taskInput @onAddTask="addTask"></taskInput>
+      <div>
+        <taskCardList task-type="todo" list-title="Список дел"></taskCardList>
+        <taskCardList task-type="done" list-title="Выполнено"></taskCardList>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import taskInput from '../components/taskInput.vue'
-import taskCard from '../components/taskCard.vue'
-import TaskData from '../models/taskData'
-import { ref } from 'vue'
+import taskCardList from '../components/taskCardList.vue'
+import { TaskData } from '../models'
 import store from '../store'
 
 export default {
   name: 'App',
   components: {
     taskInput,
-    taskCard
+    taskCardList
   },
   setup () {
-    const taskList = ref()
+    let isEmpty = true
     const taskData = ({ title, description }: TaskData) => {
       let taskInfo = {
         title,
@@ -40,34 +38,19 @@ export default {
       return taskInfo
     }
     const addTask = ({ title, description }: TaskData) => {
-      const isEmpty = (title === '' && description === '') || false
+      isEmpty = (title === '' && description === '') || false
       if (!isEmpty) {
         const taskInfo = taskData({ title, description })
-        store.commit('setTask', taskInfo)
-        taskList.value = store.state.taskList
+        store.dispatch('setTask', taskInfo)
       }
     }
-    const setDoneTask = (id: number) => {
-      store.commit('doneTask', id)
-      taskList.value = store.state.taskList
-    }
-    const removeTask = (id: number) => {
-      store.commit('removeTask', id)
-      taskList.value = store.state.taskList
-    }
     return {
-      taskList,
-      addTask,
-      removeTask,
-      setDoneTask
+      isEmpty,
+      addTask
     }
   }
 }
 </script>
 
 <style scoped>
-  .task-list {
-    list-style: none;
-    margin-top: 20px;
-  }
 </style>
