@@ -1,14 +1,12 @@
 <template>
     <div class="task-card my-style">
+        <input :id="checkboxId()" type="checkbox" @change="onDone">
+        <label :for="checkboxId()" class="task-card__check task-card__btns"></label>
         <div class="task-card__info">
             <h4>{{model.data.title}}</h4>
             <p v-if="model.data.description">{{model.data.description}}</p>
         </div>
-        <div class="task-card__btns">
-            <input :id="checkboxId()" type="checkbox" @change="onDone">
-            <label :for="checkboxId()" class="task-card__check"></label>
-            <span @click="onRemove" v-if="model.status" class="task-card__delete"></span>
-        </div>
+        <span @click="onRemove" v-if="model.status" class="task-card__delete task-card__btns"></span>
     </div>
 </template>
 

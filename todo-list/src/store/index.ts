@@ -1,9 +1,20 @@
 import { createStore } from 'vuex'
 import { Task } from '../models'
-import { SET_TASK, DONE_TASK, REMOVE_TASK } from './mutation-types'
+import { SET_TASK, DONE_TASK, REMOVE_TASK, VALIDATE_TASK } from './mutation-types'
+
+const getList = (state = { taskList: [{} as Task] }, status: boolean) => {
+  let taskList: any[] = []
+  if (state.taskList.length) {
+    if (typeof (state.taskList[0].id) === 'number') {
+      taskList = state.taskList.filter((task: Task) => task.status === status)
+    }
+  }
+  return taskList
+}
 
 export default createStore({
   state: {
+    emptyTask: false,
     taskList: [{} as Task]
   },
   mutations: {
@@ -35,6 +46,9 @@ export default createStore({
           return item
         })
       state.taskList = newTaskList
+    },
+    [VALIDATE_TASK] (state, emptyTask) {
+      state.emptyTask = emptyTask
     }
   },
   actions: {
@@ -46,28 +60,19 @@ export default createStore({
     },
     removeTask (context, id) {
       context.commit('REMOVE_TASK', id)
+    },
+    validateTask (context, emptyTask) {
+      context.commit('VALIDATE_TASK', emptyTask)
     }
   },
   modules: {
   },
   getters: {
     toDoList (state) {
-      let taskList: any[] = []
-      if (state.taskList.length) {
-        if (typeof (state.taskList[0].id) === 'number') {
-          taskList = state.taskList.filter(task => task.status === false)
-        }
-      }
-      return taskList
+      return getList(state, false)
     },
     doneList (state) {
-      let taskList: any[] = []
-      if (state.taskList.length) {
-        if (typeof (state.taskList[0].id) === 'number') {
-          taskList = state.taskList.filter(task => task.status === true)
-        }
-      }
-      return taskList
+      return getList(state, true)
     }
   }
 })

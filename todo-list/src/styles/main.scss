@@ -1,6 +1,38 @@
+$border-color: #ccc;
+$todo-color: #24b791;
+
 * {
+    font-family: cursive;
     margin: 0;
     padding: 0;
+}
+
+#app {
+    max-width: 960px;
+    margin: 0 auto;
+    border: 2px solid $todo-color;
+    padding-bottom: 20px;
+    border-radius: 15px;
+    & > div {
+        margin: -1px;
+    }
+}
+
+#nav {
+    text-align: center;
+    margin-bottom: 10px;
+    height: 60px;
+    background: $todo-color;
+    border-radius: 14px 14px 0px 0px;
+    a {
+        width: 130px;
+        display: block;
+        margin: auto;
+        height: 100%;
+    }
+    #logo {
+        height: 100%;
+    }
 }
 
 .task-page  {
@@ -8,16 +40,11 @@
     margin: 0 auto;
 }
 
-button, 
 input, 
 .my-style {
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid $border-color;
     padding: 10px;
-}
-
-button {
-    cursor: pointer;
 }
 
 .my-style {

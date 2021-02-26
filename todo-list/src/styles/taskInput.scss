@@ -1,0 +1,53 @@
+$error: #e91515;
+$add-task-button-color: #ffa500;
+$add-task-icon-color: #fff;
+
+.task-input__list {
+    display: flex;
+    flex-direction: row;
+    & > div {
+        width: calc(100% - 80px);
+        display: flex;
+        flex-direction: column;
+    }
+}
+.task-input__item:first-child {
+    margin-bottom: 10px;
+}
+.task-form {
+    input:focus,
+    button:focus  {
+        outline: none;
+    }
+}
+#add-task {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    align-self: center;
+    background: $add-task-button-color;
+    margin-left: 22px;
+    cursor: pointer;
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 23px;
+        height: 2px;
+        background: $add-task-icon-color;
+        top: 21px;
+        left: 11px;
+    }
+    &::after {
+        transform: rotate(90deg);
+    }
+}
+.task-empty-error {
+    font-size: 14px;
+    text-transform: lowercase;
+    color: $error;
+    margin: 4px 10px;
+}

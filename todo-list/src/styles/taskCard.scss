@@ -1,6 +1,9 @@
+$todo-color: #24b791;
+$check-icon-color: #fff;
+$checked-card-bg: #f4f4f4;
+
 .task-card {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     input[type="checkbox"] {
         opacity: 0;
@@ -12,7 +15,9 @@
         align-self: flex-start;
     }
     &__info {
-        width: 80%;
+        width: calc(100% - 35px);
+        padding-left: 10px;
+        word-break: break-all;
         p {
             margin-top: 10px;
         }
@@ -22,15 +27,16 @@
         display: block;
         width: 18px;
         height: 18px;
-        border: 2.5px solid #61e1c0;
+        border: 2.5px solid $todo-color;
         border-radius: 4px;
     }
     &__delete {
+        position: absolute;
+        right: 10px;
         cursor: pointer;
         margin-left: 5px;
         width: 23px;
         height: 23px;
-        position: relative;
         &::before,
         &::after {
             content: '';
@@ -53,13 +59,15 @@
 
 [data-done-task="true"] {
     .task-card {
-        background: #f4f4f4;
+        position: relative;
+        background: $checked-card-bg;
         &__info {
+            width: calc(100% - 65px);
             opacity: .5;
         }
     }
     input + .task-card__check {
-        background: #61e1c0;
+        background: $todo-color;
         position: relative;
         &::after{
             content: '';
@@ -69,19 +77,9 @@
             left: 5px;
             width: 5px;
             height: 12px;
-            border: solid #fff;
+            border: solid $check-icon-color;
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
-        }
-    }
-    h4 {
-        position: relative;
-        &::after {
-            content: '';
-            position: absolute;
-            display: block;
-            width: 100%;
-            height: 2px;
         }
     }
 }

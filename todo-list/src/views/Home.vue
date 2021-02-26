@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="task-page">
-      <taskInput @onAddTask="addTask"></taskInput>
+      <taskInput @onAddTask="addTask" :empty="isEmpty"></taskInput>
       <div>
         <taskCardList task-type="todo" list-title="Список дел"></taskCardList>
         <taskCardList task-type="done" list-title="Выполнено"></taskCardList>
@@ -39,6 +39,7 @@ export default {
     }
     const addTask = ({ title, description }: TaskData) => {
       isEmpty = (title === '' && description === '') || false
+      store.dispatch('validateTask', isEmpty)
       if (!isEmpty) {
         const taskInfo = taskData({ title, description })
         store.dispatch('setTask', taskInfo)
