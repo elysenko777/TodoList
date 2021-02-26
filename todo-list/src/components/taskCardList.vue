@@ -38,15 +38,21 @@ export default {
       changeList()
     })
     changeList()
+    const removeError = () => {
+      store.dispatch('validateTask', false)
+    }
     const setDoneTask = (id: number) => {
       store.dispatch('doneTask', id)
+      removeError()
     }
     const removeTask = (id: number) => {
       store.dispatch('removeTask', id)
+      removeError()
     }
     return {
       setDoneTask,
       removeTask,
+      removeError,
       taskList,
       hasTask,
       numberOfTask

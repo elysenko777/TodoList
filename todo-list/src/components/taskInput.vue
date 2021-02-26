@@ -2,8 +2,8 @@
   <div class="task-form">
     <div class="task-input__list my-list">
       <div>
-        <input class="task-input__item" @keyup.enter="onAddTask" v-model="title" placeholder="Тема" type="text"/>
-        <input class="task-input__item" @keyup.enter="onAddTask" v-model="description" placeholder="Описание" type="text"/>
+        <input class="task-input__item" @focus="removeError" @keyup.enter="onAddTask" v-model="title" placeholder="Тема" type="text"/>
+        <input class="task-input__item" @focus="removeError" @keyup.enter="onAddTask" v-model="description" placeholder="Описание" type="text"/>
       </div>
       <button id="add-task" @click="onAddTask" title="Добавить задачу" alt="Добавить задачу"></button>
     </div>
@@ -25,6 +25,9 @@ export default {
     watchEffect(() => {
       emptyTask.value = store.state.emptyTask
     })
+    const removeError = () => {
+      store.dispatch('validateTask', false)
+    }
     const onAddTask = () => {
       emit('onAddTask', {
         title: String(title.value),
@@ -37,7 +40,8 @@ export default {
       title,
       description,
       onAddTask,
-      emptyTask
+      emptyTask,
+      removeError
     }
   }
 }
