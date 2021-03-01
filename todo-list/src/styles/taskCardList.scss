@@ -1,3 +1,8 @@
+@mixin toggle-list ($top, $rotate) {
+    top: $top;
+    transform: rotate($rotate);
+}
+
 .task-list {
     list-style: none;
     li {
@@ -7,4 +12,27 @@
 
 .task-list__title {
     padding: 10px;
+}
+
+.task-list__toggle {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    &::before {
+        content: "^";
+        position: absolute;
+        display: inline-block;
+        left: 2px;
+        @include toggle-list(3px, 0deg);
+        line-height: 1;
+    }
+    &[data-list-show="false"]::before {
+        @include toggle-list(-5px, 180deg);
+    }
 }

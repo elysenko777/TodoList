@@ -55,3 +55,18 @@ input,
     display: flex;
     flex-direction: column;
 }
+
+@media screen and (max-width: 768px) {
+    #app {
+        border: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .task-page  {
+        padding: 0px 16px;
+    }
+    #nav {
+        margin-bottom: 16px;
+    }
+}

@@ -1,4 +1,15 @@
-export const SET_TASK = 'SET_TASK'
-export const DONE_TASK = 'DONE_TASK'
-export const REMOVE_TASK = 'REMOVE_TASK'
-export const VALIDATE_TASK = 'VALIDATE_TASK'
+const mutationType = [
+  'SET_TASK',
+  'DONE_TASK',
+  'REMOVE_TASK',
+  'VALIDATE_TASK',
+  'TOGGLE_VISIBLE_TASKLIST'
+]
+
+const typeList: {[key: string]: string} = {}
+
+mutationType.forEach(type => {
+  typeList[type] = type
+})
+
+export default typeList

@@ -1,7 +1,10 @@
 <template>
   <div v-if="hasTask">
-    <p class="task-list__title">{{listTitle}} <span class="task-list__number">({{numberOfTask}})</span></p>
-    <ul class="task-list my-list">
+    <p class="task-list__title">{{listTitle}}
+      <span class="task-list__number">({{numberOfTask}})</span>
+      <span class="task-list__toggle" v-if="taskType === 'done'" @click="toggleList" :data-list-show="visibleDoneList"></span>
+    </p>
+    <ul class="task-list my-list" v-if="taskType === 'todo' || (taskType === 'done' && visibleDoneList)">
       <li v-for="item in taskList" :key="item.id" :data-done-task="item.status">
         <taskCard @onDone="setDoneTask(item.id)" @onRemove="removeTask(item.id)"  :model="item"></taskCard>
       </li>
@@ -27,6 +30,7 @@ export default {
     const hasTask = ref()
     const numberOfTask = ref()
     const taskList = ref()
+    const visibleDoneList = ref()
     const changeList = () => {
       const list = props.taskType === 'done' ? store.getters.doneList : store.getters.toDoList
       const listLength = list.length
@@ -34,10 +38,10 @@ export default {
       numberOfTask.value = listLength
       hasTask.value = Boolean(listLength)
     }
-    watchEffect(() => {
-      changeList()
-    })
-    changeList()
+    const toggleList = () => {
+      const showList = visibleDoneList.value === true ? Boolean(0) : Boolean(1)
+      store.dispatch('toogleTaskList', showList)
+    }
     const removeError = () => {
       store.dispatch('validateTask', false)
     }
@@ -49,13 +53,21 @@ export default {
       store.dispatch('removeTask', id)
       removeError()
     }
+    watchEffect(() => {
+      changeList()
+      visibleDoneList.value = store.state.showDoneTask
+    })
+    changeList()
+    visibleDoneList.value = store.state.showDoneTask
     return {
       setDoneTask,
       removeTask,
       removeError,
       taskList,
       hasTask,
-      numberOfTask
+      numberOfTask,
+      visibleDoneList,
+      toggleList
     }
   }
 }

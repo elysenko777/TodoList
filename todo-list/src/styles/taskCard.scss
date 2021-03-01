@@ -29,6 +29,7 @@ $checked-card-bg: #f4f4f4;
         height: 18px;
         border: 2.5px solid $todo-color;
         border-radius: 4px;
+        transition: background .1s;
     }
     &__delete {
         position: absolute;
@@ -66,20 +67,49 @@ $checked-card-bg: #f4f4f4;
             opacity: .5;
         }
     }
-    input + .task-card__check {
-        background: $todo-color;
-        position: relative;
-        &::after{
-            content: '';
-            display: block;
-            position: absolute;
-            top: -1px;
-            left: 5px;
-            width: 5px;
-            height: 12px;
-            border: solid $check-icon-color;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
+    input {
+        & + .task-card__check {
+            background: $todo-color;
+            position: relative;
+            &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                top: -1px;
+                left: 5px;
+                width: 5px;
+                height: 12px;
+                border: solid $check-icon-color;
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+            }
+        }
+        &:checked + .task-card__check {
+            background: transparent;
+            &::after {
+                content: none;
+            }
+        }
+    }
+}
+
+[data-done-task="false"] {
+    .task-card {
+        input:checked + .task-card__check {
+            background: $todo-color;
+            position: relative;
+            &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                top: -1px;
+                left: 5px;
+                width: 5px;
+                height: 12px;
+                border: solid $check-icon-color;
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+            }
         }
     }
 }
