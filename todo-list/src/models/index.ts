@@ -13,3 +13,9 @@ export interface Task {
   data: TaskData;
   status: boolean;
 }
+
+export interface State {
+  emptyTask: boolean;
+  showDoneTask: boolean;
+  taskList: Task[];
+}
