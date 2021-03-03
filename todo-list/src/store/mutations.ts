@@ -1,6 +1,5 @@
-import { State } from '../models'
 import mutationTypes from './mutation-types'
-import { TaskData, Task } from '../models'
+import { TaskData, Task, State } from '../models'
 
 const {
   SET_TASK,
