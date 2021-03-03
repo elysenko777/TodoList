@@ -1,17 +1,8 @@
 import { createStore } from 'vuex'
-import { Task } from '../models'
 import { state } from './state'
 import mutations from './mutations'
-
-const getList = (state = { taskList: [{} as Task] }, status: boolean) => {
-  let taskList: object[] = []
-  if (state.taskList.length) {
-    if (typeof (state.taskList[0].id) === 'number') {
-      taskList = state.taskList.filter((task: Task) => task.status === status)
-    }
-  }
-  return taskList
-}
+import getters from './getters'
+import modules from './modules'
 
 export default createStore({
   state,
@@ -35,14 +26,6 @@ export default createStore({
       commit('TOGGLE_VISIBLE_TASKLIST', showDoneTask)
     }
   },
-  modules: {
-  },
-  getters: {
-    toDoList (state) {
-      return getList(state, false)
-    },
-    doneList (state) {
-      return getList(state, true)
-    }
-  }
+  modules,
+  getters
 })
